@@ -33,9 +33,10 @@
     "gen:icon": "esno ./build/generate/icon/index.ts"
   },
   "dependencies": {
-    "@fast-crud/fast-crud": "^1.2.3",
-    "@fast-crud/fast-extends": "^1.2.3",
-    "@fast-crud/ui-antdv": "^1.2.3",
+    "@fast-crud/fast-crud": "^1.12.0",
+    "@fast-crud/fast-extends": "^1.12.0",
+    "@fast-crud/ui-antdv": "^1.12.0",
+    "@fast-crud/ui-interface": "^1.12.0",
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^2.2.1",
