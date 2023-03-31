@@ -75,6 +75,7 @@
   import { warn } from '/@/utils/log';
 
   export default defineComponent({
+    name: 'BasicTable',
     components: {
       Table,
       BasicForm,
@@ -136,6 +137,7 @@
         getRowSelection,
         getRowSelectionRef,
         getSelectRows,
+        setSelectedRows,
         clearSelectedRowKeys,
         getSelectRowKeys,
         deleteSelectRowByKey,
@@ -253,9 +255,9 @@
           footer: unref(getFooterProps),
           ...unref(getExpandOption),
         };
-        if (slots.expandedRowRender) {
-          propsData = omit(propsData, 'scroll');
-        }
+        // if (slots.expandedRowRender) {
+        //   propsData = omit(propsData, 'scroll');
+        // }
 
         propsData = omit(propsData, ['class', 'onChange']);
         return propsData;
@@ -288,6 +290,7 @@
       const tableAction: TableActionType = {
         reload,
         getSelectRows,
+        setSelectedRows,
         clearSelectedRowKeys,
         getSelectRowKeys,
         deleteSelectRowByKey,
@@ -375,6 +378,7 @@
       padding: 16px;
 
       .ant-form {
+        width: 100%;
         padding: 12px 10px 6px;
         margin-bottom: 16px;
         background-color: @component-background;
@@ -382,8 +386,10 @@
       }
     }
 
-    .ant-tag {
-      margin-right: 0;
+    .ant-table-cell {
+      .ant-tag {
+        margin-right: 0;
+      }
     }
 
     .ant-table-wrapper {
@@ -404,10 +410,6 @@
     .ant-table {
       width: 100%;
       overflow-x: hidden;
-
-      .ant-table-body {
-        overflow: auto !important;
-      }
 
       &-title {
         display: flex;

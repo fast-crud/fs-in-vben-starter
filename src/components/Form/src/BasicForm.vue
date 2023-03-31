@@ -10,6 +10,7 @@
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
         <FormItem
+          :isAdvanced="fieldsIsAdvancedMap[schema.field]"
           :tableAction="tableAction"
           :formActionType="formActionType"
           :schema="schema"
@@ -118,9 +119,9 @@
       const getSchema = computed((): FormSchema[] => {
         const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
         for (const schema of schemas) {
-          const { defaultValue, component } = schema;
+          const { defaultValue, component, isHandleDateDefaultValue = true } = schema;
           // handle date type
-          if (defaultValue && dateItemType.includes(component)) {
+          if (isHandleDateDefaultValue && defaultValue && dateItemType.includes(component)) {
             if (!Array.isArray(defaultValue)) {
               schema.defaultValue = dateUtil(defaultValue);
             } else {
@@ -141,7 +142,7 @@
         }
       });
 
-      const { handleToggleAdvanced } = useAdvanced({
+      const { handleToggleAdvanced, fieldsIsAdvancedMap } = useAdvanced({
         advanceState,
         emit,
         getProps,
@@ -174,7 +175,7 @@
         updateSchema,
         resetSchema,
         appendSchemaByField,
-        removeSchemaByFiled,
+        removeSchemaByField,
         resetFields,
         scrollToField,
       } = useFormEvents({
@@ -241,13 +242,13 @@
         propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
       }
 
-      function setFormModel(key: string, value: any) {
+      function setFormModel(key: string, value: any, schema: FormSchema) {
         formModel[key] = value;
-        const { validateTrigger } = unref(getBindValue);
-        if (!validateTrigger || validateTrigger === 'change') {
+        emit('field-value-change', key, value);
+        // TODO 优化验证，这里如果是autoLink=false手动关联的情况下才会再次触发此函数
+        if (schema && schema.itemProps && !schema.itemProps.autoLink) {
           validateFields([key]).catch((_) => {});
         }
-        emit('field-value-change', key, value);
       }
 
       function handleEnterPress(e: KeyboardEvent) {
@@ -268,7 +269,7 @@
         updateSchema,
         resetSchema,
         setProps,
-        removeSchemaByFiled,
+        removeSchemaByField,
         appendSchemaByField,
         clearValidate,
         validateFields,
@@ -299,6 +300,7 @@
         getFormActionBindProps: computed(
           (): Recordable => ({ ...getProps.value, ...advanceState }),
         ),
+        fieldsIsAdvancedMap,
         ...formActionType,
       };
     },

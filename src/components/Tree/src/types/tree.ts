@@ -100,7 +100,7 @@ export const treeProps = buildProps({
   },
 
   checkedKeys: {
-    type: Array as PropType<CheckKeys>,
+    type: [Array, Object] as PropType<CheckKeys>,
     default: () => [],
   },
 
@@ -134,6 +134,7 @@ export const treeProps = buildProps({
     type: Boolean,
     default: false,
   },
+  treeWrapperClassName: String,
 });
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>;

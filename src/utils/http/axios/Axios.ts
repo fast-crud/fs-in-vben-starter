@@ -193,13 +193,18 @@ export class VAxios {
 
   request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
     let conf: CreateAxiosOptions = cloneDeep(config);
+    // cancelToken 如果被深拷贝，会导致最外层无法使用cancel方法来取消请求
+    if(config.cancelToken){
+        conf.cancelToken = config.cancelToken
+    }
+    
     const transform = this.getTransform();
 
     const { requestOptions } = this.options;
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options);
 
-    const { beforeRequestHook, requestCatchHook, transformRequestHook } = transform || {};
+    const { beforeRequestHook, requestCatchHook, transformResponseHook } = transform || {};
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt);
     }
@@ -211,9 +216,9 @@ export class VAxios {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
-          if (transformRequestHook && isFunction(transformRequestHook)) {
+          if (transformResponseHook && isFunction(transformResponseHook)) {
             try {
-              const ret = transformRequestHook(res, opt);
+              const ret = transformResponseHook(res, opt);
               resolve(ret);
             } catch (err) {
               reject(err || new Error('request error!'));
