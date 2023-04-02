@@ -35,7 +35,7 @@
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons-vue": "^6.1.0",
-    "@fast-crud/fast-bpmn": "^1.0.0",
+    "@fast-crud/fast-bpmn": "^1.0.1",
     "@fast-crud/fast-crud": "^1.12.0",
     "@fast-crud/fast-extends": "^1.12.0",
     "@fast-crud/ui-antdv": "^1.12.0",
