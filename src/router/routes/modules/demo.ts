@@ -21,6 +21,14 @@ const dashboard: AppRouteModule = {
       },
     },
     {
+      path: 'bpmn',
+      name: 'FastBpmn',
+      component: () => import('/@/views/demo/bpmn/index.vue'),
+      meta: {
+        title: 'FastBpmn',
+      },
+    },
+    {
       path: 'https://github.com/fast-crud/fs-in-vben-starter',
       name: '源码(github)',
       meta: {

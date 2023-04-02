@@ -19,6 +19,7 @@ import { registerGlobComp } from '/@/components/registerGlobComp';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.less';
 import setupFastCrud from './setup-fast-crud';
+import setupFastBpmn from './setup-fast-bpmn';
 import './setup-fast-crud.less';
 
 async function bootstrap() {
@@ -43,8 +44,10 @@ async function bootstrap() {
   const i18n = await setupI18n(app);
 
   //----------- 安装fast-crud--------------
-  setupFastCrud(app, i18n);
   app.use(Antd);
+  setupFastCrud(app, i18n);
+
+  setupFastBpmn(app,i18n)
   //--------------------------------------
   // Configure routing
   // 配置路由

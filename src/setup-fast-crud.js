@@ -84,7 +84,7 @@ export default function (app, i18n) {
             url: '/upload/alioss/getAuthorization',
             method: 'get',
           },
-          { apiUrl: 'http://www.docmirror.cn:7070/api' }
+          { apiUrl: 'http://www.docmirror.cn:7070/api' },
         );
       },
       sdkOpts: {
@@ -106,7 +106,7 @@ export default function (app, i18n) {
             url: '/upload/qiniu/getToken',
             method: 'get',
           },
-          { apiUrl: 'http://www.docmirror.cn:7070/api' }
+          { apiUrl: 'http://www.docmirror.cn:7070/api' },
         );
       },
       successHandle(ret) {
