@@ -72,7 +72,7 @@
           }
         },
         //重新设置组件配置
-        resetComponents(elements, components) {
+        resetComponents(element, components) {
           //ElementGenerations
           //ElementDocumentations
           //ElementJobExecution
